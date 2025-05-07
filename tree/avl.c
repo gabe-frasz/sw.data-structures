@@ -33,14 +33,14 @@ void bidimensional_print(struct Tree *t, int b);
 
 // TREE FUNCTIONS
 
-Tree *insert(Tree *t, int value) {
+Tree *avl_insert(Tree *t, int value) {
   if (t == NULL)
     return new_subtree(value);
 
   if (value < t->value)
-    t->left = insert(t->left, value);
+    t->left = avl_insert(t->left, value);
   if (value > t->value)
-    t->right = insert(t->right, value);
+    t->right = avl_insert(t->right, value);
 
   int hl = calc_h(t->left), hr = calc_h(t->right);
   t->h = max(hl, hr) + 1;
@@ -63,26 +63,26 @@ Tree *insert(Tree *t, int value) {
   return t;
 }
 
-Tree *search(Tree *t, int value) {
+Tree *avl_search(Tree *t, int value) {
   if (t == NULL)
     return NULL;
 
   if (value < t->value)
-    return search(t->left, value);
+    return avl_search(t->left, value);
   if (value > t->value)
-    return search(t->right, value);
+    return avl_search(t->right, value);
 
   return value == t->value ? t : NULL;
 }
 
-Tree *delete(Tree *t, int value) {
+Tree *avl_remove(Tree *t, int value) {
   if (t == NULL)
     return NULL;
 
   if (value < t->value)
-    t->left = delete (t->left, value);
+    t->left = avl_remove(t->left, value);
   if (value > t->value)
-    t->right = delete (t->right, value);
+    t->right = avl_remove(t->right, value);
 
   if (t->value == value) {
     if (t->left == NULL || t->right == NULL)
@@ -119,7 +119,7 @@ Tree *delete(Tree *t, int value) {
   return t;
 }
 
-void print(Tree *t, enum PrintType type) {
+void avl_print(Tree *t, enum PrintType type) {
   if (t == NULL)
     return;
 
@@ -142,12 +142,12 @@ void print(Tree *t, enum PrintType type) {
   }
 }
 
-void free_tree(Tree *t) {
+void avl_free(Tree *t) {
   if (t == NULL)
     return;
 
-  free_tree(t->left);
-  free_tree(t->right);
+  avl_free(t->left);
+  avl_free(t->right);
   free(t);
 }
 

@@ -6,7 +6,7 @@ typedef struct Node {
   struct Node *next;
 } Node;
 
-void add(Node **list, int value) {
+void list_insert(Node **list, int value) {
   Node *node = malloc(sizeof(Node));
   if (node == NULL) {
     perror("Failed to allocate memory for node");
@@ -18,7 +18,7 @@ void add(Node **list, int value) {
   *list = node;
 }
 
-Node *search(Node *list, int value) {
+Node *list_search(Node *list, int value) {
   if (list == NULL)
     return NULL;
 
@@ -31,7 +31,7 @@ Node *search(Node *list, int value) {
   return NULL;
 }
 
-int delete(Node **list, int value) {
+int list_remove(Node **list, int value) {
   if (*list == NULL)
     return 0;
 
@@ -55,7 +55,7 @@ int delete(Node **list, int value) {
   return 0;
 }
 
-void print(Node *list) {
+void list_print(Node *list) {
   if (list == NULL)
     return;
 
@@ -66,7 +66,7 @@ void print(Node *list) {
   printf("NULL\n");
 }
 
-void free_list(Node *list) {
+void list_free(Node *list) {
   if (list == NULL)
     return;
 

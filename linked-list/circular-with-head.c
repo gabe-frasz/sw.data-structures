@@ -12,7 +12,7 @@ typedef struct List {
   size_t length;
 } List;
 
-void add(List **list, int value) {
+void list_insert(List **list, int value) {
   if (list == NULL)
     return;
 
@@ -30,7 +30,7 @@ void add(List **list, int value) {
   (*list)->length++;
 }
 
-Node *search(const List *list, int value) {
+Node *list_search(const List *list, int value) {
   if (list == NULL || list->length == 0)
     return NULL;
 
@@ -44,7 +44,7 @@ Node *search(const List *list, int value) {
   return NULL;
 }
 
-int delete(List *list, int value) {
+int list_remove(List *list, int value) {
   if (list == NULL || list->length == 0)
     return 0;
 
@@ -75,7 +75,7 @@ int delete(List *list, int value) {
   return 1;
 }
 
-void print(const List *list) {
+void list_print(const List *list) {
   if (list == NULL || list->length == 0)
     return;
 
@@ -89,7 +89,7 @@ void print(const List *list) {
   printf("LOOP\n");
 }
 
-void free_list(List *list) {
+void list_free(List *list) {
   if (list == NULL || list->length == 0)
     return;
 

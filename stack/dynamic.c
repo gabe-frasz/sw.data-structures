@@ -11,7 +11,7 @@ typedef struct Stack {
   size_t size;
 } Stack;
 
-void push(Stack *s, int value) {
+void stack_push(Stack *s, int value) {
   Node *node = malloc(sizeof(Node));
   if (node == NULL) {
     perror("Failed to allocate memory for node");
@@ -25,7 +25,7 @@ void push(Stack *s, int value) {
   s->size++;
 }
 
-int pop(Stack *s, int *value) {
+int stack_pop(Stack *s, int *value) {
   if (s == NULL || s->size == 0)
     return 0;
 
@@ -38,7 +38,7 @@ int pop(Stack *s, int *value) {
   return 1;
 }
 
-int peek(Stack *s, int *value) {
+int stack_peek(Stack *s, int *value) {
   if (s == NULL || s->size == 0)
     return 0;
 
@@ -46,7 +46,7 @@ int peek(Stack *s, int *value) {
   return 1;
 }
 
-void print(Stack *s) {
+void stack_print(Stack *s) {
   if (s == NULL || s->size == 0)
     return;
 
@@ -60,7 +60,7 @@ void print(Stack *s) {
   printf("\n");
 }
 
-void free_stack(Stack *s) {
+void stack_free(Stack *s) {
   if (s == NULL)
     return;
 

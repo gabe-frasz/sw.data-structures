@@ -50,7 +50,7 @@ int dequeue(Queue *q, int *value) {
   return 1;
 }
 
-int peek(Queue *q, int *value) {
+int queue_peek(Queue *q, int *value) {
   if (q == NULL || q->size == 0)
     return 0;
 
@@ -58,7 +58,7 @@ int peek(Queue *q, int *value) {
   return 1;
 }
 
-void print(Queue *q) {
+void queue_print(Queue *q) {
   if (q == NULL || q->size == 0)
     return;
 
@@ -72,7 +72,7 @@ void print(Queue *q) {
   printf("\n");
 }
 
-void free_queue(Queue *q) {
+void queue_free(Queue *q) {
   if (q == NULL)
     return;
 

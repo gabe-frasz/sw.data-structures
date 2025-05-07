@@ -16,7 +16,7 @@ void print_recursive(Heap *h, int i, int level);
 
 // HEAP FUNCTIONS
 
-int insert(Heap *h, int value) {
+int heap_insert(Heap *h, int value) {
   if (h == NULL || h->size == h->max_size)
     return 0;
 
@@ -26,7 +26,7 @@ int insert(Heap *h, int value) {
   return 1;
 }
 
-int remove_max(Heap *h, int *value) {
+int heap_remove_max(Heap *h, int *value) {
   if (h == NULL || h->size == 0)
     return 0;
 
@@ -37,14 +37,14 @@ int remove_max(Heap *h, int *value) {
   return 1;
 }
 
-void print(Heap *h) {
+void heap_print(Heap *h) {
   if (h == NULL || h->size == 0)
     return;
 
   print_recursive(h, 1, 0);
 }
 
-void free_heap_owned(Heap *h) {
+void heap_free_owned(Heap *h) {
   if (h == NULL)
     return;
 
@@ -52,7 +52,7 @@ void free_heap_owned(Heap *h) {
   free(h);
 }
 
-void free_heap_view(Heap *h) {
+void heap_free_view(Heap *h) {
   if (h == NULL)
     return;
 
@@ -179,6 +179,6 @@ int heap_sort(int **data, size_t data_size) {
     down(h, 1);
   }
 
-  free_heap_view(h);
+  heap_free_view(h);
   return 1;
 }

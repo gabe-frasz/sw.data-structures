@@ -12,7 +12,7 @@ typedef struct List {
   size_t length;
 } List;
 
-void add(List *list, int value) {
+void list_insert(List *list, int value) {
   Node *node = malloc(sizeof(Node));
   if (node == NULL) {
     perror("Failed to allocate memory for node");
@@ -25,7 +25,7 @@ void add(List *list, int value) {
   list->length++;
 }
 
-Node *search(List *list, int value) {
+Node *list_search(List *list, int value) {
   if (list == NULL)
     return NULL;
 
@@ -39,7 +39,7 @@ Node *search(List *list, int value) {
   return NULL;
 }
 
-int delete(List *list, int value) {
+int list_remove(List *list, int value) {
   if (list == NULL)
     return 0;
 
@@ -62,7 +62,7 @@ int delete(List *list, int value) {
   return 0;
 }
 
-void print(List *list) {
+void list_print(List *list) {
   if (list == NULL)
     return;
 
@@ -76,7 +76,7 @@ void print(List *list) {
   printf("NULL\n");
 }
 
-void free_list(List *list) {
+void list_free(List *list) {
   if (list == NULL)
     return;
 

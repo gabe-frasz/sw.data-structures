@@ -8,7 +8,7 @@ typedef struct Stack {
   int max_size;
 } Stack;
 
-int push(Stack *s, int value) {
+int stack_push(Stack *s, int value) {
   if (s == NULL || s->size == s->max_size)
     return 0;
 
@@ -17,7 +17,7 @@ int push(Stack *s, int value) {
   return 1;
 }
 
-int pop(Stack *s, int *value) {
+int stack_pop(Stack *s, int *value) {
   if (s == NULL || s->size == 0)
     return 0;
 
@@ -34,7 +34,7 @@ int peek(Stack *s, int *value) {
   return 1;
 }
 
-void print(Stack *s) {
+void stack_print(Stack *s) {
   if (s == NULL || s->size == 0)
     return;
 
@@ -44,8 +44,7 @@ void print(Stack *s) {
   printf("\n");
 }
 
-
-void free_stack(Stack *s) {
+void stack_free(Stack *s) {
   if (s == NULL)
     return;
 
