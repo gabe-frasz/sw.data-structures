@@ -154,7 +154,7 @@ void avl_free(Tree *t) {
 Tree *new_subtree(int value) {
   Tree *t = malloc(sizeof(Tree));
   if (t == NULL) {
-    perror("Failed to allocate memory for tree");
+    perror("new_subtree: failed to allocate memory for tree");
     exit(EXIT_FAILURE);
   }
   t->value = value;

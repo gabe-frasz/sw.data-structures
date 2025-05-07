@@ -63,10 +63,14 @@ void heap_free_view(Heap *h) {
 Heap *new_heap(size_t max_size) {
   Heap *h = malloc(sizeof(Heap));
   if (h == NULL) {
-    perror("Failed to allocate memory for heap");
+    perror("new_heap: failed to allocate memory for heap");
     exit(EXIT_FAILURE);
   }
   h->data = malloc(sizeof(int) * max_size);
+  if (h->data == NULL) {
+    perror("new_heap: failed to allocate memory for heap data");
+    exit(EXIT_FAILURE);
+  }
   h->size = 0;
   h->max_size = max_size;
   return h;

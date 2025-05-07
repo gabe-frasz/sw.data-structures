@@ -61,14 +61,14 @@ void queue_free(Queue *q) {
 Queue *new_queue(int max_size) {
   Queue *q = malloc(sizeof(Queue));
   if (q == NULL) {
-    perror("Failed to allocate memory for queue");
-    exit(1);
+    perror("new_queue: failed to allocate memory for queue");
+    exit(EXIT_FAILURE);
   }
 
   q->data = malloc(sizeof(int) * max_size);
   if (q->data == NULL) {
-    perror("Failed to allocate memory for queue data");
-    exit(1);
+    perror("new_queue: failed to allocate memory for queue data");
+    exit(EXIT_FAILURE);
   }
 
   q->start = -1;

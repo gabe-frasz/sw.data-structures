@@ -55,14 +55,14 @@ void stack_free(Stack *s) {
 Stack *new_stack(int max_size) {
   Stack *s = malloc(sizeof(Stack));
   if (s == NULL) {
-    perror("Failed to allocate memory for stack");
-    exit(1);
+    perror("new_stack: failed to allocate memory for stack");
+    exit(EXIT_FAILURE);
   }
 
   s->data = malloc(sizeof(int) * max_size);
   if (s->data == NULL) {
-    perror("Failed to allocate memory for stack data");
-    exit(1);
+    perror("new_stack: failed to allocate memory for stack data");
+    exit(EXIT_FAILURE);
   }
   s->top = -1;
   s->size = 0;

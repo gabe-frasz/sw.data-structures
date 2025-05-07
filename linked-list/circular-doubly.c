@@ -13,7 +13,7 @@ void list_insert(Node **list, int value) {
 
   Node *node = malloc(sizeof(Node));
   if (node == NULL) {
-    perror("Failed to allocate memory for node");
+    perror("list_insert: failed to allocate memory for node");
     exit(EXIT_FAILURE);
   }
   node->value = value;

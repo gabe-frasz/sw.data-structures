@@ -19,7 +19,7 @@ void list_insert(List **list, int value) {
 
   Node *node = malloc(sizeof(Node));
   if (node == NULL) {
-    perror("Failed to allocate memory for node");
+    perror("list_insert: failed to allocate memory for node");
     exit(EXIT_FAILURE);
   }
   node->value = value;
@@ -104,7 +104,7 @@ void list_free(List *list) {
 List *new_list() {
   List *list = malloc(sizeof(List));
   if (list == NULL) {
-    perror("Failed to allocate memory for list");
+    perror("new_list: failed to allocate memory for list");
     exit(EXIT_FAILURE);
   }
   list->head.next = &list->head;

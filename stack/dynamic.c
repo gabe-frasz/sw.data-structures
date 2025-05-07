@@ -14,8 +14,8 @@ typedef struct Stack {
 void stack_push(Stack *s, int value) {
   Node *node = malloc(sizeof(Node));
   if (node == NULL) {
-    perror("Failed to allocate memory for node");
-    exit(1);
+    perror("stack_push: failed to allocate memory for node");
+    exit(EXIT_FAILURE);
   }
 
   node->value = value;
@@ -75,8 +75,8 @@ void stack_free(Stack *s) {
 Stack *new_stack() {
   Stack *s = malloc(sizeof(Stack));
   if (s == NULL) {
-    perror("Failed to allocate memory for stack");
-    exit(1);
+    perror("new_stack: failed to allocate memory for stack");
+    exit(EXIT_FAILURE);
   }
   s->top = NULL;
   s->size = 0;

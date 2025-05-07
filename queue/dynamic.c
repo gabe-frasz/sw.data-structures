@@ -18,7 +18,7 @@ int enqueue(Queue *q, int value) {
 
   Node *node = malloc(sizeof(Node));
   if (node == NULL) {
-    perror("malloc");
+    perror("enqueue: failed to allocate memory for node");
     exit(EXIT_FAILURE);
   }
   node->value = value;
@@ -88,7 +88,7 @@ void queue_free(Queue *q) {
 Queue *new_queue() {
   Queue *q = malloc(sizeof(Queue));
   if (q == NULL) {
-    perror("Failed to allocate memory for queue");
+    perror("new_queue: failed to allocate memory for queue");
     exit(EXIT_FAILURE);
   }
   q->start = NULL;
