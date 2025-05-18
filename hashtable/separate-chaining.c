@@ -101,7 +101,7 @@ void hashtable_print(Hashtable *h) {
 }
 
 void hashtable_free(Hashtable *h) {
-  if (h == NULL)
+  if (h == NULL || h->data == NULL)
     return;
 
   for (size_t i = 0; i < h->max_size; i++) {
