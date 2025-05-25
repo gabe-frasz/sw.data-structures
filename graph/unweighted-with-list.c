@@ -1,6 +1,8 @@
 #include "unweighted.h"
 #include <stdio.h>
 
+enum GraphBSFColor { WHITE, GRAY, BLACK };
+
 typedef struct Node {
   size_t vertex;
   struct Node *next;
@@ -38,6 +40,61 @@ bool graph_insert(Graph *g, size_t v1, size_t v2) {
   g->list[v2] = node;
 
   return true;
+}
+
+void graph_bfs(Graph *g, size_t origin) {
+  if (g == NULL || g->list == NULL) {
+    fprintf(stderr, "graph_bfs: graph is NULL\n");
+    return;
+  }
+
+  if (origin >= g->vertices_count) {
+    fprintf(stderr, "graph_bfs: invalid vertex index\n");
+    return;
+  }
+
+  enum GraphBSFColor color[g->vertices_count];
+  size_t distance[g->vertices_count];
+  size_t parent[g->vertices_count];
+
+  for (size_t i = 0; i < g->vertices_count; i++) {
+    color[i] = WHITE;
+    distance[i] = -1;
+    parent[i] = -1;
+  }
+
+  color[origin] = GRAY;
+  distance[origin] = 0;
+
+  size_t queue[g->vertices_count];
+  size_t start = 0, end = 0;
+
+  queue[end++] = origin;
+
+  while (start < end) {
+    size_t curr = queue[start++];
+    Node *curr_node = g->list[curr];
+
+    while (curr_node != NULL) {
+      if (color[curr_node->vertex] == WHITE) {
+        color[curr_node->vertex] = GRAY;
+        distance[curr_node->vertex] = distance[curr] + 1;
+        parent[curr_node->vertex] = curr;
+        queue[end++] = curr_node->vertex;
+      }
+      curr_node = curr_node->next;
+    }
+
+    color[curr] = BLACK;
+  }
+
+  for (size_t i = 0; i < g->vertices_count; i++) {
+    if (parent[i] == -1) {
+      printf("v%zu has no parent\n", i);
+    } else {
+      printf("the parent of v%zu is v%zu\n", i, parent[i]);
+    }
+  }
 }
 
 bool graph_remove(Graph *g, size_t v1, size_t v2) {
@@ -158,4 +215,36 @@ Node *new_node(size_t vertex) {
   node->next = NULL;
 
   return node;
+}
+
+int main(void) {
+  Graph *g = new_graph(5, false);
+
+  graph_insert(g, 0, 1);
+  graph_insert(g, 0, 2);
+  graph_insert(g, 1, 2);
+  graph_insert(g, 1, 3);
+  graph_insert(g, 2, 3);
+  graph_insert(g, 2, 4);
+
+  graph_print(g);
+
+  graph_bfs(g, 0);
+
+  graph_free(g);
+
+  g = new_graph(5, true);
+
+  graph_insert(g, 0, 1);
+  graph_insert(g, 0, 2);
+  graph_insert(g, 1, 2);
+  graph_insert(g, 1, 3);
+  graph_insert(g, 2, 3);
+  graph_insert(g, 2, 4);
+
+  graph_print(g);
+
+  graph_bfs(g, 0);
+
+  graph_free(g);
 }
