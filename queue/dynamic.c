@@ -1,3 +1,4 @@
+#include "dynamic.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -12,9 +13,11 @@ typedef struct Queue {
   size_t size;
 } Queue;
 
-int enqueue(Queue *q, int value) {
-  if (q == NULL)
-    return 0;
+bool enqueue(Queue *q, int value) {
+  if (q == NULL) {
+    fprintf(stderr, "enqueue: queue is NULL\n");
+    return false;
+  }
 
   Node *node = malloc(sizeof(Node));
   if (node == NULL) {
@@ -31,12 +34,15 @@ int enqueue(Queue *q, int value) {
 
   q->end = node;
   q->size++;
-  return 1;
+
+  return true;
 }
 
-int dequeue(Queue *q, int *value) {
-  if (q == NULL || q->size == 0)
-    return 0;
+bool dequeue(Queue *q, int *value) {
+  if (q == NULL || q->size == 0) {
+    fprintf(stderr, "dequeue: queue is NULL or empty\n");
+    return false;
+  }
 
   Node *node = q->start;
   *value = node->value;
@@ -47,15 +53,18 @@ int dequeue(Queue *q, int *value) {
 
   free(node);
   q->size--;
-  return 1;
+
+  return true;
 }
 
-int queue_peek(Queue *q, int *value) {
-  if (q == NULL || q->size == 0)
-    return 0;
+bool queue_peek(Queue *q, int *value) {
+  if (q == NULL || q->size == 0) {
+    fprintf(stderr, "queue_peek: queue is NULL or empty\n");
+    return false;
+  }
 
   *value = q->start->value;
-  return 1;
+  return true;
 }
 
 void queue_print(Queue *q) {
@@ -76,10 +85,9 @@ void queue_free(Queue *q) {
   if (q == NULL)
     return;
 
-  Node *node = q->start;
-  while (node != NULL) {
-    Node *tmp = node;
-    node = node->next;
+  while (q->start != NULL) {
+    Node *tmp = q->start;
+    q->start = q->start->next;
     free(tmp);
   }
   free(q);

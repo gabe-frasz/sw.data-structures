@@ -1,3 +1,4 @@
+#include "static.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,34 +9,40 @@ typedef struct Queue {
   int max_size;
 } Queue;
 
-int enqueue(Queue *q, int value) {
-  if (q == NULL || q->size == q->max_size)
-    return 0;
+bool enqueue(Queue *q, int value) {
+  if (q == NULL || q->size == q->max_size) {
+    fprintf(stderr, "enqueue: queue is NULL or full\n");
+    return false;
+  }
 
   int end = q->start == -1 ? ++q->start : (q->start + q->size) % q->max_size;
   q->data[end] = value;
   q->size++;
-  
-  return 1;
+
+  return true;
 }
 
-int dequeue(Queue *q, int *value) {
-  if (q == NULL || q->size == 0)
-    return 0;
+bool dequeue(Queue *q, int *value) {
+  if (q == NULL || q->size == 0) {
+    fprintf(stderr, "dequeue: queue is NULL or empty\n");
+    return false;
+  }
 
   *value = q->data[q->start];
   q->start = (q->start + 1) % q->max_size;
   q->size--;
 
-  return 1;
+  return true;
 }
 
-int queue_peek(Queue *q, int *value) {
-  if (q == NULL || q->size == 0)
-    return 0;
+bool queue_peek(Queue *q, int *value) {
+  if (q == NULL || q->size == 0) {
+    fprintf(stderr, "queue_peek: queue is NULL or empty\n");
+    return false;
+  }
 
   *value = q->data[q->start];
-  return 1;
+  return true;
 }
 
 void queue_print(Queue *q) {
@@ -48,13 +55,14 @@ void queue_print(Queue *q) {
   }
   printf("\n");
 }
-    
 
 void queue_free(Queue *q) {
   if (q == NULL)
     return;
 
-  free(q->data);
+  if (q->data != NULL)
+    free(q->data);
+
   free(q);
 }
 
