@@ -1,7 +1,9 @@
 #include "unweighted.h"
 #include <stdio.h>
 
-enum GraphBSFColor { WHITE, GRAY, BLACK };
+size_t global_dfs_count = 0;
+
+enum GraphSearchColor { WHITE, GRAY, BLACK };
 
 typedef struct Node {
   size_t vertex;
@@ -14,6 +16,8 @@ struct Graph {
   struct Node **list;
 };
 
+void dfs_visit(Graph *g, size_t curr, enum GraphSearchColor *color,
+               size_t *parent, size_t *discovery, size_t *finish);
 bool list_remove(Node **list, size_t vertex);
 Node *new_node(size_t vertex);
 
@@ -53,7 +57,7 @@ void graph_bfs(Graph *g, size_t origin) {
     return;
   }
 
-  enum GraphBSFColor color[g->vertices_count];
+  enum GraphSearchColor color[g->vertices_count];
   size_t distance[g->vertices_count];
   size_t parent[g->vertices_count];
 
@@ -95,6 +99,44 @@ void graph_bfs(Graph *g, size_t origin) {
       printf("the parent of v%zu is v%zu\n", i, parent[i]);
     }
   }
+}
+
+void graph_dfs(Graph *g) {
+  if (g == NULL || g->list == NULL) {
+    fprintf(stderr, "graph_dfs: graph is NULL\n");
+    return;
+  }
+
+  enum GraphSearchColor color[g->vertices_count];
+  size_t parent[g->vertices_count];
+  size_t discovery[g->vertices_count];
+  size_t finish[g->vertices_count];
+
+  for (size_t i = 0; i < g->vertices_count; i++) {
+    color[i] = WHITE;
+    parent[i] = -1;
+    discovery[i] = -1;
+    finish[i] = -1;
+  }
+
+  for (size_t i = 0; i < g->vertices_count; i++) {
+    if (color[i] == WHITE)
+      dfs_visit(g, i, color, parent, discovery, finish);
+  }
+
+  global_dfs_count = 0;
+
+  for (size_t i = 0; i < g->vertices_count; i++) {
+    if (parent[i] == -1) {
+      printf("v%zu has no parent\n", i);
+    } else {
+      printf("the parent of v%zu is v%zu\n", i, parent[i]);
+    }
+  }
+
+  for (size_t i = 0; i < g->vertices_count; i++)
+    printf("v%zu was discovered at %zu and finished at %zu\n", i, discovery[i],
+           finish[i]);
 }
 
 bool graph_remove(Graph *g, size_t v1, size_t v2) {
@@ -177,6 +219,27 @@ Graph *new_graph(size_t vertices_count, bool directed) {
 
 // HELPER FUNCTIONS
 
+void dfs_visit(Graph *g, size_t curr, enum GraphSearchColor *color,
+               size_t *parent, size_t *discovery, size_t *finish) {
+  if (color[curr] != WHITE)
+    return;
+
+  color[curr] = GRAY;
+  discovery[curr] = ++global_dfs_count;
+
+  Node *node = g->list[curr];
+  while (node != NULL) {
+    if (color[node->vertex] == WHITE) {
+      parent[node->vertex] = curr;
+      dfs_visit(g, node->vertex, color, parent, discovery, finish);
+    }
+    node = node->next;
+  }
+
+  color[curr] = BLACK;
+  finish[curr] = ++global_dfs_count;
+}
+
 bool list_remove(Node **list, size_t vertex) {
   if (list == NULL || *list == NULL) {
     fprintf(stderr, "list_remove: list is NULL\n");
@@ -215,36 +278,4 @@ Node *new_node(size_t vertex) {
   node->next = NULL;
 
   return node;
-}
-
-int main(void) {
-  Graph *g = new_graph(5, false);
-
-  graph_insert(g, 0, 1);
-  graph_insert(g, 0, 2);
-  graph_insert(g, 1, 2);
-  graph_insert(g, 1, 3);
-  graph_insert(g, 2, 3);
-  graph_insert(g, 2, 4);
-
-  graph_print(g);
-
-  graph_bfs(g, 0);
-
-  graph_free(g);
-
-  g = new_graph(5, true);
-
-  graph_insert(g, 0, 1);
-  graph_insert(g, 0, 2);
-  graph_insert(g, 1, 2);
-  graph_insert(g, 1, 3);
-  graph_insert(g, 2, 3);
-  graph_insert(g, 2, 4);
-
-  graph_print(g);
-
-  graph_bfs(g, 0);
-
-  graph_free(g);
 }
