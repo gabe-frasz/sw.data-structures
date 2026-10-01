@@ -4,14 +4,14 @@ Reinventing the wheel, one segmentation fault at a time.
 
 ## Data structures
 
-- [Graph](graph/README.md)
-- [Hash table](hashtable/README.md)
-- [Heap](heap/README.md)
-- [Linked list](linked-list/README.md)
-- [Memory allocator](mollock/README.md)
-- [Queue](queue/README.md)
-- [Stack](stack/README.md)
-- [Tree](tree/README.md)
+- [Graph](graph/)
+- [Hash table](hashtable/)
+- [Heap](heap/)
+- [Linked list](linked-list/)
+- [Memory allocator](mollock/)
+- [Queue](queue/)
+- [Stack](stack/)
+- [Tree](tree/)
 
 # Todo
 
