@@ -9,3 +9,4 @@ Reinventing the wheel, one segmentation fault at a time.
 - [ ] Weighted graphs
 - [ ] Topological sort
 - [ ] Dijkstra algorithm
+- [ ] Fix mollock memory alignment
