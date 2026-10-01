@@ -18,6 +18,6 @@ mfree(ptr);
 ## Testing
 
 ```sh
-gcc -std=c17 -Wall -Wextra -Wpedantic -g mollock.c mollock.c -o test
+gcc -std=c17 -Wall -Wextra -Wpedantic -g test.c mollock.c -o test
 ./test
 ```
