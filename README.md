@@ -15,7 +15,12 @@ Reinventing the wheel, one segmentation fault at a time.
 
 # Todo
 
-- [ ] Fix heapify up/down
+- [ ] Heap
+  - [ ] swap heapify_* (they're inverted)
+  - [ ] rename up/down to sift_*
+  - [ ] fix 1-based indexing
+  - [ ] improve realloc
+  - [ ] use size_t instead of int
 - [ ] Red-black tree
 - [ ] Weighted graphs
 - [ ] Topological sort
